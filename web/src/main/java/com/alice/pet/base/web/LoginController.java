@@ -33,8 +33,8 @@ import java.util.List;
 @RequestMapping("/")
 public class LoginController extends BaseController {
 
-    @Autowired
-    private SsoClient ssoClient;
+//    @Autowired
+//    private SsoClient ssoClient;
 
     @Autowired
     private UserService userService;
@@ -42,15 +42,15 @@ public class LoginController extends BaseController {
     @Autowired
     private MenuService menuService;
 
-    @Log("发送验证码")
-    @ResponseBody
-    @RequestMapping("captcha")
-    public MessageBean sendCaptcha(User user) {
-        return this.process(() -> {
-            SsoModel model = ssoClient.sendCode(user.getAccount());
-            return ssoClient.verifty(model);
-        });
-    }
+//    @Log("发送验证码")
+//    @ResponseBody
+//    @RequestMapping("captcha")
+//    public MessageBean sendCaptcha(User user) {
+//        return this.process(() -> {
+//            SsoModel model = ssoClient.sendCode(user.getAccount());
+//            return ssoClient.verifty(model);
+//        });
+//    }
 
     @Log("后台登录页面")
     @RequestMapping(value = "adminLogin", method = RequestMethod.GET)
@@ -69,7 +69,7 @@ public class LoginController extends BaseController {
             return "redirect:/index";
         }
         model.addAttribute("show", false);
-        return "sys/login";
+        return "sys/adminLogin";
     }
 
     @Log("登录")
@@ -81,7 +81,7 @@ public class LoginController extends BaseController {
         } catch (BizException e) {
             model.addAttribute("show", true);
             model.addAttribute("msg", e.getDesc());
-            return "sys/login";
+            return "sys/adminLogin";
         }
         return "redirect:/index";
     }
@@ -120,7 +120,7 @@ public class LoginController extends BaseController {
         if (LoginUserTypeEnum.manager.equals(loginUserType)) {
             return "redirect:/adminLogin";
         }
-        return "redirect:/login";
+        return "redirect:/adminLogin";
     }
 
 }

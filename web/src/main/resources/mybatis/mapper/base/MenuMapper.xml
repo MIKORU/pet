@@ -182,12 +182,18 @@
         WHERE m.FuiType IN (0, 1) AND m.FuiDelFlag = 0
     </select>
 
-    <select id="findPermCodesByUserId" resultType="string">
+    <select id="findPermCodesByUserId" resultType="java.lang.String">
         SELECT m.FstrPerms
         FROM t_menu m
             INNER JOIN t_role_menu rm ON rm.FstrMenuId = m.FstrMenuId AND m.FuiDelFlag = 0
             INNER JOIN t_role r ON r.FstrRoleId = rm.FstrRoleId AND r.FuiDelFlag = 0
             INNER JOIN t_user_role ur ON ur.FstrRoleId = r.FstrRoleId AND ur.FstrUserId = #{userId}
     </select>
+
+    <delete id="removeMenuById">
+        DELETE m.*
+        FROM t_menu m
+        WHERE FuiId = #{id}
+    </delete>
 
 </mapper>

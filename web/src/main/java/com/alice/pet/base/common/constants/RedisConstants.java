@@ -10,7 +10,7 @@ public class RedisConstants {
      * session key
      * TODO baseweb 改为应用名称
      */
-    public static String SPRING_SESSION_MY = "baseweb:session:";
+    public static String SPRING_SESSION_MY = "pet:session:";
 
     public static int SPRING_SESSION_EXPIRE = 1200;
 
@@ -18,7 +18,7 @@ public class RedisConstants {
      * menu cache key
      * TODO baseweb 改为应用名称
      */
-    public static String CURRENT_USER_MENU_KEY = "baseweb:current:menu";
+    public static String CURRENT_USER_MENU_KEY = "pet:current:menu";
 
     /**
      * user type key
@@ -26,7 +26,7 @@ public class RedisConstants {
      */
     public static String CURRENT_USER_TYPE = "current:type";
 
-    public static String LOG_OPERATE_SET_KEY= "baseweb:log:operate:set";
+    public static String LOG_OPERATE_SET_KEY= "pet:log:operate:set";
 
 
 

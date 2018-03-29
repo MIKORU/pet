@@ -1,16 +1,21 @@
 var prefix = "/sys/menu";
 $(function () {
     validateRule();
+
     //打开图标列表
     $("#ico-btn").click(function () {
-        layer.open({
+        var $icon = $("#icon");
+        parent.layer.open({
             type: 2,
             title: '图标列表',
             content: '/FontIcoList.html',
             area: ['480px', '90%'],
             success: function (layero, index) {
-                //var body = layer.getChildFrame('.ico-list', index);
-                //console.log(layero, index);
+                // console.log(parent.layer.getChildFrame('.ico-list', index));
+                parent.layer.getChildFrame('.ico-list i', index).click(function () {
+                    $icon.val($(this).attr('class'));
+                    parent.layer.close(index);
+                });
             }
         });
     });

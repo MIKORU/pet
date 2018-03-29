@@ -28,4 +28,6 @@ public interface MenuMapper  {
 
     List<String> findPermCodesByUserId(@Param("userId") String userId);
 
+    int removeMenuById(@Param("id") Long id);
+
 }

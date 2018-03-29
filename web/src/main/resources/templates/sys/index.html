@@ -3,7 +3,7 @@
 <head>
     <th:block th:include="include :: header"/>
 </head>
-<body class="fixed-sidebar full-height-layout gray-bg"
+<body class="fixed-sidebar full-height-layout gray-bg skin-1"
       style="overflow: hidden">
 <div id="wrapper">
     <!--左侧导航开始-->
@@ -16,11 +16,11 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <span><img alt="image" class="img-circle" style="width: 60px; height: 60px;"
-                                   th:src="@{/static/img/xy_user.png}"/></span>
+                                   th:src="@{/cat.png}"/></span>
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear">
                                 <span class="block m-t-xs">
-                                    <strong class="font-bold">XXX System</strong>
+                                    <strong class="font-bold">宠物信息管理平台</strong>
                                 </span>
                                 <span class="text-muted text-xs block">
                                     <!--/*@thymesVar id="currentUser" type="com.alice.pet.base.model.UserModel"*/-->
@@ -37,7 +37,7 @@
                         </ul>
                     </div>
                     <div class="logo-element">
-                        XXX
+                        PET
                     </div>
                 </li>
                 <!--/*@thymesVar id="menus" type="java.util.List<com.alice.pet.base.domain.Menu>"*/-->
@@ -156,7 +156,7 @@
             </iframe>
         </div>
         <div class="footer">
-            <div class="pull-right">Power By 支付Java组</div>
+            <div class="pull-right">Power By alice.peng</div>
         </div>
     </div>
     <!--右侧部分结束-->

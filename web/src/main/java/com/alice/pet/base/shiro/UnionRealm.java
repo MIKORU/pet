@@ -36,8 +36,8 @@ public class UnionRealm extends AuthorizingRealm {
 
     public static final String REALM_NAME = "UnionRealm";
 
-    @Value("${sso.user.defaultRole}")
-    private String defaultRole;
+//    @Value("${sso.user.defaultRole}")
+//    private String defaultRole;
 
     @Lazy
     @Autowired
@@ -46,14 +46,14 @@ public class UnionRealm extends AuthorizingRealm {
     @Lazy
     @Autowired
     private MenuService menuService;
+//
+//    @Lazy
+//    @Autowired
+//    private SsoClient ssoClient;
 
-    @Lazy
-    @Autowired
-    private SsoClient ssoClient;
-
-    @Lazy
-    @Autowired
-    private OaClient oaClient;
+//    @Lazy
+//    @Autowired
+//    private OaClient oaClient;
 
     /**
      * Retrieves the AuthorizationInfo for the given principals from the underlying data store.  When returning
@@ -99,24 +99,25 @@ public class UnionRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         String account = token.getPrincipal().toString();
         AuthcToken authcToken = (AuthcToken) token;
-        SsoModel ssoModel = ssoClient.login(account, DigestUtils.md5DigestAsHex(new String((char[]) token.getCredentials()).getBytes()), authcToken.getCaptcha(), "commonsafety.oa.com");
-        ssoClient.verifty(ssoModel);
+//        SsoModel ssoModel = ssoClient.login(account, DigestUtils.md5DigestAsHex(new String((char[]) token.getCredentials()).getBytes()), authcToken.getCaptcha(), "commonsafety.oa.com");
+//        ssoClient.verifty(ssoModel);
         User user = userService.getBasicForLogin(account);
-        if (user == null) {
-            user = new User(account);
-            OaModel oaModel = null;
-            try {
-                oaModel = oaClient.query(account);
-                oaClient.verifty(oaModel);
-                user.setName(oaModel.getData().getName());
-            } catch (feign.codec.DecodeException e) {
-                log.warn("OA 服务不可用");
-                user.setName(account.contains("@") ? account.substring(0, account.indexOf("@")) : account);
-            }
-            user.setState(UserStateEnum.ENABLE.state);
-            user.setRoleIds(Collections.singleton(defaultRole));
-            this.saveNewUser(user);
-        } else if (UserStateEnum.DISABLED.state == user.getState()) {
+//        if (user == null) {
+//            user = new User(account);
+//            OaModel oaModel = null;
+//            try {
+//                oaModel = oaClient.query(account);
+//                oaClient.verifty(oaModel);
+//                user.setName(oaModel.getData().getName());
+//            } catch (feign.codec.DecodeException e) {
+//                log.warn("OA 服务不可用");
+//                user.setName(account.contains("@") ? account.substring(0, account.indexOf("@")) : account);
+//            }
+//            user.setState(UserStateEnum.ENABLE.state);
+//            user.setRoleIds(Collections.singleton(defaultRole));
+//            this.saveNewUser(user);
+//        } else
+        if (UserStateEnum.DISABLED.state == user.getState()) {
             throw new DisabledAccountException();
         }
         return new SimpleAuthenticationInfo(

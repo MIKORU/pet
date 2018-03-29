@@ -76,12 +76,12 @@ var load = function () {
                 var e = '<a class="btn btn-primary btn-sm '
                     + s_edit_h
                     + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                    + item.id
+                    + item.menuId
                     + '\')"><i class="fa fa-edit"></i></a> ';
                 var p = '<a class="btn btn-primary btn-sm '
                     + s_add_h
                     + '" href="#" mce_href="#" title="添加下级" onclick="add(\''
-                    + item.id
+                    + item.menuId
                     + '\')"><i class="fa fa-plus"></i></a> ';
                 var d = '<a class="btn btn-warning btn-sm '
                     + s_remove_h
@@ -124,11 +124,12 @@ function remove(id) {
                 'id': id
             },
             success: function (data) {
-                if (data.code == 0) {
-                    layer.msg("删除成功");
-                    reLoad();
+                if (data.state == 1) {
+                    xy.infox("删除成功");
+                    layer.close();
+                    window.location.reload();
                 } else {
-                    layer.msg(data.msg);
+                    xy.infox("删除失败");
                 }
             }
         });

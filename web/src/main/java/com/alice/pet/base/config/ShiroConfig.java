@@ -2,6 +2,7 @@ package com.alice.pet.base.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.alice.pet.base.common.constants.RedisConstants;
+import org.apache.shiro.mgt.SecurityManager;
 import com.alice.pet.base.shiro.*;
 import com.alice.pet.base.shiro.AuthcRealm;
 import com.alice.pet.base.utils.PasswordUtil;
@@ -253,7 +254,7 @@ public class ShiroConfig {
         ShiroFilterFactoryBean bean = new ShiroFilterFactoryBean();
         bean.setSecurityManager(manager);
         //配置登录的url和登录成功的url
-        bean.setLoginUrl("/login");
+        bean.setLoginUrl("/adminLogin");
         bean.setSuccessUrl("/index");
         bean.setUnauthorizedUrl("/error/403");
         bean.setFilterChainDefinitionMap(shiroFilterChainDefinition.getFilterChainMap());

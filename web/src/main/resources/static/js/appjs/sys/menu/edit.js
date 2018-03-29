@@ -11,7 +11,7 @@ $(function () {
             content: '/FontIcoList.html',
             area: ['480px', '90%'],
             success: function (layero, index) {
-                console.log(parent.layer.getChildFrame('.ico-list', index));
+                // console.log(parent.layer.getChildFrame('.ico-list', index));
                 parent.layer.getChildFrame('.ico-list i', index).click(function () {
                     $icon.val($(this).attr('class'));
                     parent.layer.close(index);

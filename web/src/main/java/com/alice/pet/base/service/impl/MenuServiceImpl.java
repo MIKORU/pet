@@ -101,6 +101,12 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
+    public int remove(Menu menu) {
+        Long id = menu.getId();
+        return menuMapper.removeMenuById(id);
+    }
+
+    @Override
     public int update(Menu menu) {
         return menuMapper.update(menu);
     }

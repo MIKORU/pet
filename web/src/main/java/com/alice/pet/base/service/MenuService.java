@@ -28,5 +28,7 @@ public interface MenuService {
 
     int add(Menu menu);
 
+    int remove(Menu menu);
+
     int update(Menu menu);
 }

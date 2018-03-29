@@ -75,6 +75,14 @@ public class MenuController extends BaseController {
         return this.process(() -> menuService.add(menu));
     }
 
+    @Log("菜单资源删除")
+    @ResponseBody
+    @RequiresPermissions("sys:menu:remove")
+    @RequestMapping(value = "remove", method = RequestMethod.POST)
+    public MessageBean remove(Menu menu) {
+        return this.process(() -> menuService.remove(menu));
+    }
+
     @Log("菜单资源修改页面")
     @RequiresPermissions("sys:menu:edit")
     @RequestMapping(value = "edit/{menuId}", method = RequestMethod.GET)
