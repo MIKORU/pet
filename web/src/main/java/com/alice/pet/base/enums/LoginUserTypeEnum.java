@@ -13,7 +13,7 @@ public enum LoginUserTypeEnum {
      */
     manager(1),
     /**
-     * 公司统一登录人员
+     * 统一登录人员
      */
     sso(2);
 
