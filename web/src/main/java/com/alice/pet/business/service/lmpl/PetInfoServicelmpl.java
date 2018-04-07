@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @Service("PetInfoService")
 @Slf4j
@@ -19,36 +18,35 @@ public class PetInfoServicelmpl implements PetInfoService {
     @Resource
     private PetInfoMapper petInfoMapper;
 
-
     @Override
-    public Boolean updatePetInfo(PetInfo petInfo) {
-        return 0 != petInfoMapper.updateByPrimaryKeySelective(petInfo);
+    public Boolean update(PetInfo info) {
+        return 0 != petInfoMapper.updateByPrimaryKeySelective(info);
     }
 
     @Override
-    public Boolean addPetInfo(PetInfo petInfo) {
-        return 0 != petInfoMapper.insertSelective(petInfo);
+    public Boolean add(PetInfo info) {
+        return 0 != petInfoMapper.insertSelective(info);
     }
 
     @Override
-    public PetInfo searchPetInfoById(Integer id) {
-        return petInfoMapper.selectByPrimaryKey(id);
-    }
-
-    @Override
-    public Page<PetInfo> searchPetInfoAll(int offset, int limit) {
+    public Page<PetInfo> searchAll(int offset, int limit) {
         log.info("入参:{},出参:{}", offset, limit);
         return PageHelper.offsetPage(offset, limit)
                 .doSelectPage(() -> petInfoMapper.selectAll());
     }
 
     @Override
-    public Boolean deletePetInfo(Integer id) {
+    public Boolean delete(Integer id) {
         return 0 != petInfoMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public Boolean deleteBatch(Integer[] ids) {
         return 0!=petInfoMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public PetInfo searchById(Integer id) {
+        return petInfoMapper.selectByPrimaryKey(id);
     }
 }

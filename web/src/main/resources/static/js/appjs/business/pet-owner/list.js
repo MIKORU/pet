@@ -1,4 +1,4 @@
-var prefix = "/petInfo";
+var prefix = "/petOwner";
 $(function () {
     load();
 });
@@ -49,35 +49,32 @@ function load() {
             title: '序号'
         }, {
             field: 'name', // 列字段名
-            title: '宠物名' // 列标题
+            title: '姓名' // 列标题
         }, {
             field: 'sex',
             title: '性别',
             formatter: function (value, row, index) {
                 switch (value) {
                     case false:
-                        return "母";
+                        return "女";
                     case true:
-                        return "公";
+                        return "男";
                     default:
                         return "未知";
                 }
             }
         }, {
             field: 'age',
-            title: '年龄(/month)'
+            title: '年龄'
         }, {
-            field: 'weight',
-            title: '体重(/g)'
+            field: 'address',
+            title: '住址'
         }, {
-            field: 'health',
-            title: '健康情况(%)'
+            field: 'mail',
+            title: '邮件'
         }, {
-            field: 'breed',
-            title: '品种'
-        }, {
-            field: 'birthday',
-            title: '出生日期'
+            field: 'identitycard',
+            title: '身份证'
         }, {
             title: '操作',
             field: 'id',
@@ -111,6 +108,7 @@ function add() {
         content: prefix + '/add' // iframe的url
     });
 }
+
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -127,12 +125,13 @@ function remove(id) {
                     layer.msg("删除成功");
                     reLoad();
                 } else {
-                    layer.msg(r.msg+"删除失败");
+                    layer.msg(r.msg + "删除失败");
                 }
             }
         });
     })
 }
+
 function batchRemove() {
 
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -151,7 +150,7 @@ function batchRemove() {
         $.ajax({
             type: 'POST',
             data: JSON.stringify(ids),
-            contentType : "application/json",
+            contentType: "application/json",
             url: prefix + '/batchRemove',
             success: function (r) {
                 if (r.data === true) {
@@ -165,6 +164,7 @@ function batchRemove() {
     }, function () {
     });
 }
+
 function edit(id) {
     layer.open({
         type: 2,

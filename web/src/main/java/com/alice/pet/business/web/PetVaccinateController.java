@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alice.pet.base.common.page.PageList;
 import com.alice.pet.base.model.MessageBean;
 import com.alice.pet.base.web.BaseController;
-import com.alice.pet.business.domain.PetInfo;
-import com.alice.pet.business.service.PetInfoService;
+import com.alice.pet.business.domain.PetVaccination;
+import com.alice.pet.business.service.PetVaccinateService;
 import com.github.pagehelper.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -16,16 +16,16 @@ import javax.annotation.Resource;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/petInfo")
+@RequestMapping("/petVaccinate")
 @Slf4j
-public class PetInfoController extends BaseController {
+public class PetVaccinateController extends BaseController {
 
     @Resource
-    private PetInfoService service;
+    private PetVaccinateService service;
 
     @GetMapping
     public String page() {
-        return "business/petInfo/list";
+        return "business/petVaccination/list";
     }
 
     @GetMapping("/list")
@@ -33,21 +33,21 @@ public class PetInfoController extends BaseController {
     public MessageBean list(int offset, int limit) {
         log.info("入参:{},出参:{}", offset, limit);
         return this.process(() -> {
-            Page<PetInfo> petInfos = service.searchAll(offset, limit);
-            return new PageList(petInfos.getTotal(), petInfos.getResult().stream().collect(Collectors.toList()));
+            Page<PetVaccination> petVaccinations = service.searchAll(offset, limit);
+            return new PageList(petVaccinations.getTotal(), petVaccinations.getResult().stream().collect(Collectors.toList()));
         });
     }
 
     @GetMapping("/add")
     public String add() {
-        return "business/petInfo/add";
+        return "business/petVaccination/add";
     }
 
     @PostMapping("/add")
     @ResponseBody
-    public MessageBean add(PetInfo petInfo) {
-        log.info("入参：{}", JSON.toJSON(petInfo));
-        return this.process(() -> service.add(petInfo));
+    public MessageBean add(PetVaccination petVaccination) {
+        log.info("入参：{}", JSON.toJSON(petVaccination));
+        return this.process(() -> service.add(petVaccination));
     }
 
     @PostMapping("/remove")
@@ -66,15 +66,15 @@ public class PetInfoController extends BaseController {
 
     @GetMapping("/edit/{id}")
     public String toEdit(@PathVariable("id") Integer id,Model model){
-        PetInfo petInfo = service.searchById(id);
-        model.addAttribute("pet",petInfo);
-        return "business/petInfo/edit";
+        PetVaccination petVaccination = service.searchById(id);
+        model.addAttribute("vaccination",petVaccination);
+        return "business/petVaccination/edit";
     }
 
     @PostMapping("/update")
     @ResponseBody
-    public MessageBean edit(PetInfo petInfo){
-        return this.process(()->service.update(petInfo));
+    public MessageBean edit(PetVaccination petVaccination){
+        return this.process(()->service.update(petVaccination));
     }
 
 }

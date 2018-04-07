@@ -1,4 +1,4 @@
-var prefix = "/petInfo";
+var prefix = "/petVaccinate";
 $(function () {
     load();
 });
@@ -48,36 +48,20 @@ function load() {
             field: 'id',
             title: '序号'
         }, {
-            field: 'name', // 列字段名
-            title: '宠物名' // 列标题
+            field: 'type', // 列字段名
+            title: '类型' // 列标题
         }, {
-            field: 'sex',
-            title: '性别',
-            formatter: function (value, row, index) {
-                switch (value) {
-                    case false:
-                        return "母";
-                    case true:
-                        return "公";
-                    default:
-                        return "未知";
-                }
-            }
+            field: 'petid',
+            title: '宠物名',
         }, {
-            field: 'age',
-            title: '年龄(/month)'
+            field: 'status',
+            title: '情况'
         }, {
-            field: 'weight',
-            title: '体重(/g)'
+            field: 'remark',
+            title: '备注'
         }, {
-            field: 'health',
-            title: '健康情况(%)'
-        }, {
-            field: 'breed',
-            title: '品种'
-        }, {
-            field: 'birthday',
-            title: '出生日期'
+            field: 'createtime',
+            title: '注射时间'
         }, {
             title: '操作',
             field: 'id',
@@ -103,7 +87,7 @@ function add() {
     // iframe层
     layer.open({
         type: 2,
-        title: '添加新的宠物',
+        title: '添加新的记录',
         maxmin: true,
         resize: true,
         shadeClose: false, // 点击遮罩关闭层
@@ -111,6 +95,7 @@ function add() {
         content: prefix + '/add' // iframe的url
     });
 }
+
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -127,12 +112,13 @@ function remove(id) {
                     layer.msg("删除成功");
                     reLoad();
                 } else {
-                    layer.msg(r.msg+"删除失败");
+                    layer.msg(r.msg + "删除失败");
                 }
             }
         });
     })
 }
+
 function batchRemove() {
 
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -151,7 +137,7 @@ function batchRemove() {
         $.ajax({
             type: 'POST',
             data: JSON.stringify(ids),
-            contentType : "application/json",
+            contentType: "application/json",
             url: prefix + '/batchRemove',
             success: function (r) {
                 if (r.data === true) {
@@ -165,6 +151,7 @@ function batchRemove() {
     }, function () {
     });
 }
+
 function edit(id) {
     layer.open({
         type: 2,
