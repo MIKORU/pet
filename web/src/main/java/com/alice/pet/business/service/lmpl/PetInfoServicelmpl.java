@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service("PetInfoService")
 @Slf4j
@@ -21,12 +22,12 @@ public class PetInfoServicelmpl implements PetInfoService {
 
     @Override
     public Boolean updatePetInfo(PetInfo petInfo) {
-        return 0 != petInfoMapper.updateByPrimaryKey(petInfo);
+        return 0 != petInfoMapper.updateByPrimaryKeySelective(petInfo);
     }
 
     @Override
     public Boolean addPetInfo(PetInfo petInfo) {
-        return 0 != petInfoMapper.insert(petInfo);
+        return 0 != petInfoMapper.insertSelective(petInfo);
     }
 
     @Override
@@ -44,5 +45,10 @@ public class PetInfoServicelmpl implements PetInfoService {
     @Override
     public Boolean deletePetInfo(Integer id) {
         return 0 != petInfoMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Boolean deleteBatch(Integer[] ids) {
+        return 0!=petInfoMapper.deleteBatch(ids);
     }
 }

@@ -22,4 +22,6 @@ public interface PetInfoMapper {
     int updateByPrimaryKeySelective(PetInfo record);
 
     int updateByPrimaryKey(PetInfo record);
+
+    int deleteBatch(Integer[] ids);
 }

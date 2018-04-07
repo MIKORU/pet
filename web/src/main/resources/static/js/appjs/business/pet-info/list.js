@@ -8,10 +8,10 @@ function load() {
         height: getHeight(),
         method: 'get', // 服务器数据的请求方式 get or post
         url: prefix + "/list", // 服务器数据的加载地址
-        search: true, // 是否显示搜索框
-        formatSearch: function () {
-            return "搜索名称";
-        },
+        // search: true, // 是否显示搜索框
+        // formatSearch: function () {
+        //     return "搜索名称";
+        // },
         showRefresh: true,
         // showToggle: true,
         showColumns: true,
@@ -27,18 +27,16 @@ function load() {
         singleSelect: false, // 设置为true将禁止多选
         // contentType : "application/x-www-form-urlencoded",
         // //发送到服务器的数据编码类型
-        pageSize: 10, // 如果设置了分页，每页数据条数
-        pageNumber: 1, // 如果设置了分布，首页页码
+        // pageSize: 10, // 如果设置了分页，每页数据条数
+        // pageNumber: 1, // 如果设置了分布，首页页码
         // "server"
-        // queryParams: function (params) {
-        //     console.log(params);
-        //     return {
-        //         // 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
-        //         limit: params.limit,
-        //         offset: params.offset,
-        //         search: params.search
-        //     };
-        // },
+        queryParams: function (params) {
+            return {
+                // 说明：传入后台的参数包括offset开始索引，limit步长，sort排序列，order：desc或者,以及所有列的键值对
+                limit: params.limit,
+                offset: params.offset
+            };
+        },
         responseHandler: function (resp) {
             return resp.data;
         },
@@ -57,9 +55,9 @@ function load() {
             title: '性别',
             formatter: function (value, row, index) {
                 switch (value) {
-                    case 0:
+                    case false:
                         return "母";
-                    case 1:
+                    case true:
                         return "公";
                     default:
                         return "未知";
@@ -67,13 +65,13 @@ function load() {
             }
         }, {
             field: 'age',
-            title: '年龄'
+            title: '年龄(/month)'
         }, {
             field: 'weight',
-            title: '体重'
+            title: '体重(/g)'
         }, {
             field: 'health',
-            title: '健康情况'
+            title: '健康情况(%)'
         }, {
             field: 'breed',
             title: '品种'
@@ -86,10 +84,10 @@ function load() {
             align: 'center',
             formatter: function (value, row, index) {
                 var e = '<a class="btn btn-primary btn-sm ' + s_edit_h + '" href="#" mce_href="#" title="编辑" onclick="edit(\''
-                    + row.roleId
+                    + row.id
                     + '\')"><i class="fa fa-edit"></i></a> ';
                 var d = '<a class="btn btn-warning btn-sm ' + s_remove_h + '" href="#" title="删除"  mce_href="#" onclick="remove(\''
-                    + row.roleId
+                    + row.id
                     + '\')"><i class="fa fa-remove"></i></a> ';
                 return e + d;
             }
@@ -101,20 +99,18 @@ function reLoad() {
     $('#exampleTable').bootstrapTable('refresh');
 }
 
-/*function add() {
+function add() {
     // iframe层
     layer.open({
         type: 2,
-        title: '添加角色',
+        title: '添加新的宠物',
         maxmin: true,
         resize: true,
         shadeClose: false, // 点击遮罩关闭层
         area: ['800px', '520px'],
         content: prefix + '/add' // iframe的url
     });
-}*/
-/*
-
+}
 function remove(id) {
     layer.confirm('确定要删除选中的记录？', {
         btn: ['确定', '取消']
@@ -126,30 +122,17 @@ function remove(id) {
                 'id': id
             },
             success: function (r) {
-                if (r.code === 0) {
+                console.log(r);
+                if (r.data === true) {
                     layer.msg("删除成功");
                     reLoad();
                 } else {
-                    layer.msg(r.msg);
+                    layer.msg(r.msg+"删除失败");
                 }
             }
         });
     })
-
 }
-
-function edit(id) {
-    layer.open({
-        type: 2,
-        title: '角色修改',
-        maxmin: true,
-        resize: true,
-        shadeClose: true, // 点击遮罩关闭层
-        area: ['800px', '520px'],
-        content: prefix + '/edit/' + id // iframe的url
-    });
-}
-
 function batchRemove() {
 
     var rows = $('#exampleTable').bootstrapTable('getSelections'); // 返回所有选择的行，当没有选择的记录时，返回一个空数组
@@ -162,18 +145,17 @@ function batchRemove() {
     }, function () {
         var ids = new Array();
         $.each(rows, function (i, row) {
-            ids[i] = row['roleId'];
+            ids[i] = row['id'];
         });
-        console.log(ids);
+        // console.log(ids);
         $.ajax({
             type: 'POST',
-            data: {
-                "ids": ids
-            },
+            data: JSON.stringify(ids),
+            contentType : "application/json",
             url: prefix + '/batchRemove',
             success: function (r) {
-                if (r.code == 0) {
-                    layer.msg(r.msg);
+                if (r.data === true) {
+                    layer.msg("删除成功");
                     reLoad();
                 } else {
                     layer.msg(r.msg);
@@ -182,4 +164,15 @@ function batchRemove() {
         });
     }, function () {
     });
-}*/
+}
+function edit(id) {
+    layer.open({
+        type: 2,
+        title: '角色修改',
+        maxmin: true,
+        resize: true,
+        shadeClose: true, // 点击遮罩关闭层
+        area: ['800px', '520px'],
+        content: prefix + '/edit/' + id // iframe的url
+    });
+}
